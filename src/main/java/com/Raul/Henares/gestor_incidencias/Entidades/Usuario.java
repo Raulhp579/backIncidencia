@@ -1,4 +1,4 @@
-package com.Raul.Henares.gestor_incidencias.Entidades;
+package com.raul.henares.gestor_incidencias.Entidades;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;

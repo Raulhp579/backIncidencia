@@ -1,7 +1,7 @@
-package com.Raul.Henares.gestor_incidencias.Repositorios;
+package com.raul.henares.gestor_incidencias.Repositorios;
 
-import com.Raul.Henares.gestor_incidencias.Entidades.Comentario;
-import com.Raul.Henares.gestor_incidencias.Entidades.Incidencia;
+import com.raul.henares.gestor_incidencias.Entidades.Comentario;
+import com.raul.henares.gestor_incidencias.Entidades.Incidencia;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

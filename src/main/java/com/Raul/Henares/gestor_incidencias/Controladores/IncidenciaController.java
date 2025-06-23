@@ -1,8 +1,8 @@
-package com.Raul.Henares.gestor_incidencias.Controladores;
+package com.raul.henares.gestor_incidencias.Controladores;
 
-import com.Raul.Henares.gestor_incidencias.Entidades.Estado;
-import com.Raul.Henares.gestor_incidencias.Entidades.Incidencia;
-import com.Raul.Henares.gestor_incidencias.Servicios.IncidenciaService;
+import com.raul.henares.gestor_incidencias.Entidades.Estado;
+import com.raul.henares.gestor_incidencias.Entidades.Incidencia;
+import com.raul.henares.gestor_incidencias.Servicios.IncidenciaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

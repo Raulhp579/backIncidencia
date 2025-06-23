@@ -1,8 +1,8 @@
-package com.Raul.Henares.gestor_incidencias.Servicios;
+package com.raul.henares.gestor_incidencias.Servicios;
 
-import com.Raul.Henares.gestor_incidencias.Entidades.Comentario;
-import com.Raul.Henares.gestor_incidencias.Repositorios.ComentarioRepository;
-import com.Raul.Henares.gestor_incidencias.Repositorios.IncidenciaRepository;
+import com.raul.henares.gestor_incidencias.Entidades.Comentario;
+import com.raul.henares.gestor_incidencias.Repositorios.ComentarioRepository;
+import com.raul.henares.gestor_incidencias.Repositorios.IncidenciaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

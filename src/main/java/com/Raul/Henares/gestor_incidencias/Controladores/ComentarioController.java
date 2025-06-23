@@ -1,7 +1,7 @@
-package com.Raul.Henares.gestor_incidencias.Controladores;
+package com.raul.henares.gestor_incidencias.Controladores;
 
-import com.Raul.Henares.gestor_incidencias.Entidades.Comentario;
-import com.Raul.Henares.gestor_incidencias.Servicios.ComentarioService;
+import com.raul.henares.gestor_incidencias.Entidades.Comentario;
+import com.raul.henares.gestor_incidencias.Servicios.ComentarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

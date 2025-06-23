@@ -1,4 +1,4 @@
-package com.Raul.Henares.gestor_incidencias.Entidades;
+package com.raul.henares.gestor_incidencias.Entidades;
 
 public enum Prioridad {
     BAJA,
