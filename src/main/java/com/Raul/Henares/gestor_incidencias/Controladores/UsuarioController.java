@@ -1,8 +1,11 @@
 package com.raul.henares.gestor_incidencias.Controladores;
 
+import com.raul.henares.gestor_incidencias.Dtos.ModificarUsuarioDto;
+import com.raul.henares.gestor_incidencias.Dtos.UsuarioDto;
 import com.raul.henares.gestor_incidencias.Entidades.Usuario;
 import com.raul.henares.gestor_incidencias.Servicios.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,30 +19,56 @@ public class UsuarioController {
     private UsuarioService usuarioService;
 
     @GetMapping("/getUsers")
-    public List<Usuario> listarUsuarios(){
-        return this.usuarioService.getAll();
+    public ResponseEntity<List<UsuarioDto>> listarUsuarios(){
+        try {
+            List<UsuarioDto> respuesta = this.usuarioService.getAll();
+            return ResponseEntity.ok(respuesta);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+
     }
 
     @GetMapping("/getUser/{id}")
-    public Usuario obtenerUsuarioPorId(@PathVariable("id") Long idUsuario){
-        return this.usuarioService.getById(idUsuario);
+    public ResponseEntity<UsuarioDto> obtenerUsuarioPorId(@PathVariable("id") Long idUsuario){
+        try {
+            UsuarioDto respuesta = this.usuarioService.getById(idUsuario);
+            return ResponseEntity.ok(respuesta);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+
     }
 
     @PostMapping("/addUser")
-    public void crearUsuario(@RequestBody Usuario usuario){
-        this.usuarioService.crear(usuario);
+    public ResponseEntity<String> crearUsuario(@RequestBody UsuarioDto usuario){
+        try {
+            this.usuarioService.crear(usuario);
+            return ResponseEntity.ok("usuario creado");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+
     }
 
-    @PutMapping("/updateUser/{idUser}/{cambio}/{valor}")
-    public <T> void actualizarUsuario(@PathVariable("idUser")Long idUsuario,
-                                      @PathVariable("cambio")String cambio,
-                                      @PathVariable("valor")T valor){
-
-        this.usuarioService.modificarUsuario(idUsuario,cambio,valor);
+    @PutMapping("/updateUser") //cambiar en el front
+    public ResponseEntity<String> actualizarUsuario(@RequestBody ModificarUsuarioDto dto){
+        try {
+            this.usuarioService.modificarUsuario(dto);
+            return ResponseEntity.ok("usuario modificado");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @GetMapping("/getByName/{nombre}")
-    public Usuario buscarPorNombre(@PathVariable("nombre") String nombre){
-        return this.usuarioService.getPorNombre(nombre);
+    public ResponseEntity<UsuarioDto> buscarPorNombre(@PathVariable("nombre") String nombre){
+        try {
+            UsuarioDto respuesta = this.usuarioService.getPorNombre(nombre);
+            return ResponseEntity.ok(respuesta);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+
     }
 }
