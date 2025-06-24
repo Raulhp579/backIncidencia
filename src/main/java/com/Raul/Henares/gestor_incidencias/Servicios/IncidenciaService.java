@@ -41,9 +41,9 @@ public class IncidenciaService {
         return getIncidenciaDto(inc);
     }
 
-    public List<IncidenciaDto> getPorCliente(Long clienteId) throws Exception {
+    public List<IncidenciaDto> getPorId(Long clienteId) throws Exception {
         Usuario usuario = this.usuarioRepository.getReferenceById(clienteId);
-        if (usuario.getRol().equals(Rol.CLIENTE)){
+
             List<Incidencia> incidencias = this.incidenciaRepository.findByCliente(usuario);
             List<IncidenciaDto> incidenciaDtos = new ArrayList<>();
             for (Incidencia inc : incidencias){
@@ -51,9 +51,7 @@ public class IncidenciaService {
                 incidenciaDtos.add(dto);
             }
             return incidenciaDtos;
-        }else {
-            throw new Exception("Debe ser un cliente");
-        }
+
     }
 
     private static IncidenciaDto getIncidenciaDto(Incidencia inc) {

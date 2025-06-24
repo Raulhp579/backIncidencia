@@ -18,10 +18,10 @@ public class IncidenciaController {
     @Autowired
     private IncidenciaService incidenciaService;
 
-    @GetMapping("/getByClient/{id}")
-    public ResponseEntity<List<IncidenciaDto>> getPorCliente(@PathVariable("id")Long id) throws Exception{
+    @GetMapping("/getById/{id}")
+    public ResponseEntity<List<IncidenciaDto>> getPorId(@PathVariable("id")Long id) throws Exception{
         try {
-            List<IncidenciaDto> respuesta = this.incidenciaService.getPorCliente(id);
+            List<IncidenciaDto> respuesta = this.incidenciaService.getPorId(id);
             return ResponseEntity.ok(respuesta);
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
