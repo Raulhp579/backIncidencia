@@ -1,9 +1,11 @@
 package com.raul.henares.gestor_incidencias.Controladores;
 
+import com.raul.henares.gestor_incidencias.Dtos.IncidenciaDto;
 import com.raul.henares.gestor_incidencias.Entidades.Estado;
 import com.raul.henares.gestor_incidencias.Entidades.Incidencia;
 import com.raul.henares.gestor_incidencias.Servicios.IncidenciaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,18 +19,36 @@ public class IncidenciaController {
     private IncidenciaService incidenciaService;
 
     @GetMapping("/getByClient/{id}")
-    public List<Incidencia> getPorCliente(@PathVariable("id")Long id) throws Exception{
-        return this.incidenciaService.getPorCliente(id);
+    public ResponseEntity<List<IncidenciaDto>> getPorCliente(@PathVariable("id")Long id) throws Exception{
+        try {
+            List<IncidenciaDto> respuesta = this.incidenciaService.getPorCliente(id);
+            return ResponseEntity.ok(respuesta);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+
     }
 
     @GetMapping("/getByTechnical/{id}")
-    public List<Incidencia> getPorTecnico(@PathVariable("id") Long id) throws Exception{
-        return this.incidenciaService.getPorTecnico(id);
+    public ResponseEntity<List<IncidenciaDto>> getPorTecnico(@PathVariable("id") Long id) throws Exception{
+        try {
+            List<IncidenciaDto> respuesta = this.incidenciaService.getPorTecnico(id);
+            return ResponseEntity.ok(respuesta);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+
+
     }
 
     @PostMapping("/addIncidence")
-    public void crearIncidencia(@RequestBody Incidencia incidencia){
-        this.incidenciaService.crear(incidencia);
+    public ResponseEntity<String> crearIncidencia(@RequestBody IncidenciaDto dto){
+        try {
+             this.incidenciaService.crear(dto);
+             return ResponseEntity.ok("Incidencia Creada");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @PutMapping("/changeStatus/{id}/{estado}")
@@ -42,17 +62,37 @@ public class IncidenciaController {
     }
 
     @GetMapping("getIncidence/{id}")
-    public Incidencia getIncidencia(@PathVariable("id")Long id){
-        return this.incidenciaService.getById(id);
+    public ResponseEntity<IncidenciaDto> getIncidencia(@PathVariable("id")Long id){
+        try {
+            IncidenciaDto respuesta = this.incidenciaService.getById(id);
+            return ResponseEntity.ok(respuesta);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+
+
     }
 
     @GetMapping("/showAll")
-    public List<Incidencia> getIncidencias(){
-        return this.incidenciaService.obtenerIncidencias();
+    public ResponseEntity<List<IncidenciaDto>> getIncidencias(){
+        try {
+            List<IncidenciaDto> respuesta = this.incidenciaService.obtenerIncidencias();
+            return ResponseEntity.ok(respuesta);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+
+
     }
 
     @GetMapping("/findByNombre/{nombre}")
-    public List<Incidencia> getByNombre(@PathVariable("nombre") String nombre) throws Exception {
-        return  this.incidenciaService.getPorNombre(nombre);
+    public ResponseEntity<List<IncidenciaDto>> getByNombre(@PathVariable("nombre") String nombre) throws Exception {
+        try {
+            List<IncidenciaDto> respuesta = this.incidenciaService.getPorNombre(nombre);
+            return ResponseEntity.ok(respuesta);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+
     }
 }

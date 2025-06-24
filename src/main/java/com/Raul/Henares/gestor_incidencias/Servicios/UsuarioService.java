@@ -1,11 +1,14 @@
 package com.raul.henares.gestor_incidencias.Servicios;
 
+import com.raul.henares.gestor_incidencias.Dtos.ModificarUsuarioDto;
+import com.raul.henares.gestor_incidencias.Dtos.UsuarioDto;
 import com.raul.henares.gestor_incidencias.Entidades.Rol;
 import com.raul.henares.gestor_incidencias.Entidades.Usuario;
 import com.raul.henares.gestor_incidencias.Repositorios.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -13,34 +16,58 @@ public class UsuarioService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    public List<Usuario> getAll(){
-        return this.usuarioRepository.findAll();
+    public static UsuarioDto getUsuarioDto(Usuario usuario){
+        UsuarioDto dto = new UsuarioDto();
+        dto.setId(usuario.getId());
+        dto.setNombre(usuario.getNombre());
+        dto.setEmail(usuario.getEmail());
+        dto.setContrasenya(usuario.getContrasenya());
+        dto.setRol(usuario.getRol());
+        return dto;
     }
 
-    public Usuario getById(Long id){
-        return this.usuarioRepository.getReferenceById(id);
+    public List<UsuarioDto> getAll(){
+        List<Usuario> usuarios = this.usuarioRepository.findAll();
+        List<UsuarioDto> dtos = new ArrayList<>();
+        for (Usuario usuario : usuarios){
+            UsuarioDto dto = getUsuarioDto(usuario);
+            dtos.add(dto);
+        }
+        return dtos;
     }
 
-    public void crear(Usuario usuario){
-        this.usuarioRepository.save(usuario);
+    public UsuarioDto getById(Long id){
+        Usuario usuario = this.usuarioRepository.getReferenceById(id);
+        return getUsuarioDto(usuario);
     }
 
-    public <T> void modificarUsuario(Long idUs, String cambio, T valor){
-        Usuario usuario = this.usuarioRepository.getReferenceById(idUs);
-        if (cambio.equalsIgnoreCase("nombre")){
-            usuario.setNombre((String) valor);
-        } else if (cambio.equalsIgnoreCase("email")) {
-            usuario.setEmail((String) valor);
-        } else if (cambio.equalsIgnoreCase("contraseña")) {
-            usuario.setContraseña((String) valor);
-        } else if (cambio.equalsIgnoreCase("rol")) {
-            usuario.setRol((Rol) valor);
+    public Usuario crear(UsuarioDto dto){
+        String nombre = dto.getNombre();
+        String email = dto.getEmail();
+        String contrasenya = dto.getContrasenya();
+        Rol rol = dto.getRol();
+        Usuario usuario = new Usuario(nombre,email,contrasenya,rol);
+        return this.usuarioRepository.save(usuario);
+    }
+
+    public Usuario modificarUsuario(ModificarUsuarioDto dto){
+        Usuario usuario = this.usuarioRepository.getReferenceById(dto.getIdUsuario());
+
+        if (dto.getCambio().equalsIgnoreCase("nombre")){
+            usuario.setNombre((String) dto.getValor());
+        } else if (dto.getCambio().equalsIgnoreCase("email")) {
+            usuario.setEmail((String) dto.getValor());
+        } else if (dto.getCambio().equalsIgnoreCase("contraseña")) {
+            usuario.setContrasenya((String) dto.getValor());
+        } else if (dto.getCambio().equalsIgnoreCase("rol")) {
+            usuario.setRol((Rol) dto.getValor());
         }
 
-        this.usuarioRepository.save(usuario);
+        return this.usuarioRepository.save(usuario);
     }
 
-    public Usuario getPorNombre(String nombre){
-        return this.usuarioRepository.findByNombre(nombre);
+    public UsuarioDto getPorNombre(String nombre){
+        Usuario usuario = this.usuarioRepository.findByNombre(nombre);
+        return getUsuarioDto(usuario);
     }
 }

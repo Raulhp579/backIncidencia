@@ -46,10 +46,9 @@ public class Incidencia {
     private Usuario tecnico;
 
 
-    public Incidencia(Usuario tecnico, @NonNull Usuario cliente, LocalDateTime fechaCreacion, @NonNull Prioridad prioridad, @NonNull Estado estado, @NonNull String descripcion, @NonNull String titulo) {
+    public Incidencia(Usuario tecnico, @NonNull Usuario cliente, @NonNull Prioridad prioridad, @NonNull Estado estado, @NonNull String descripcion, @NonNull String titulo) {
         this.tecnico = tecnico;
         this.cliente = cliente;
-        this.fechaCreacion = fechaCreacion;
         this.prioridad = prioridad;
         this.estado = estado;
         this.descripcion = descripcion;

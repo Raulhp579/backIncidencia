@@ -27,7 +27,7 @@ public class Usuario {
     private String email;
 
     @NonNull
-    private String contraseña;
+    private String contrasenya;
 
     @NonNull
     @Enumerated(EnumType.STRING)

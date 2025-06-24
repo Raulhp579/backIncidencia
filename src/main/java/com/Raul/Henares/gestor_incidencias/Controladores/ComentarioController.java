@@ -1,8 +1,10 @@
 package com.raul.henares.gestor_incidencias.Controladores;
 
+import com.raul.henares.gestor_incidencias.Dtos.ComentarioDto;
 import com.raul.henares.gestor_incidencias.Entidades.Comentario;
 import com.raul.henares.gestor_incidencias.Servicios.ComentarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,12 +18,24 @@ public class ComentarioController {
     private ComentarioService comentarioService;
 
     @GetMapping("/getComments/{id}")
-    public List<Comentario> listarComentarios(@PathVariable("id")Long id){
-        return this.comentarioService.getPorIncidencia(id);
+    public ResponseEntity<List<ComentarioDto>> listarComentarios(@PathVariable("id")Long id){
+        try {
+            List<ComentarioDto> respuesta = this.comentarioService.getPorIncidencia(id);
+            return ResponseEntity.ok(respuesta);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+
     }
 
     @PostMapping("/addComment")
-    public void crearComentario(@RequestBody Comentario comentario){
-        this.comentarioService.crear(comentario);
+    public ResponseEntity<String> crearComentario(@RequestBody ComentarioDto comentario){
+        try {
+            this.comentarioService.crear(comentario);
+            return ResponseEntity.ok("comentario creado");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+
     }
 }
