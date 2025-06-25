@@ -70,4 +70,15 @@ public class UsuarioService {
         Usuario usuario = this.usuarioRepository.findByNombre(nombre);
         return getUsuarioDto(usuario);
     }
+
+    public List<UsuarioDto> buscarPorRol(Rol rol){
+        List<Usuario> usuarios = this.usuarioRepository.findByRol(rol);
+        List<UsuarioDto> usuarioDtos = new ArrayList<>();
+
+        for (Usuario usuario : usuarios){
+            UsuarioDto dto = getUsuarioDto(usuario);
+            usuarioDtos.add(dto);
+        }
+        return usuarioDtos;
+    }
 }

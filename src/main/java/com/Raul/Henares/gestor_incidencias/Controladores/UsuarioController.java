@@ -2,6 +2,7 @@ package com.raul.henares.gestor_incidencias.Controladores;
 
 import com.raul.henares.gestor_incidencias.Dtos.ModificarUsuarioDto;
 import com.raul.henares.gestor_incidencias.Dtos.UsuarioDto;
+import com.raul.henares.gestor_incidencias.Entidades.Rol;
 import com.raul.henares.gestor_incidencias.Entidades.Usuario;
 import com.raul.henares.gestor_incidencias.Servicios.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,5 +71,15 @@ public class UsuarioController {
             return ResponseEntity.badRequest().build();
         }
 
+    }
+
+    @GetMapping("/getUsersByRol/{rol}")
+    public ResponseEntity<List<UsuarioDto>> buscarPorRol(@PathVariable("rol")Rol rol){
+        try {
+            List<UsuarioDto> respuesta = this.usuarioService.buscarPorRol(rol);
+            return ResponseEntity.ok(respuesta);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 }
