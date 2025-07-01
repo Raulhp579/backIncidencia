@@ -1,6 +1,9 @@
 package com.raul.henares.gestor_incidencias.Servicios;
 
 import com.raul.henares.gestor_incidencias.Dtos.IncidenciaDto;
+import com.raul.henares.gestor_incidencias.Dtos.ModificarIncidenciaDto;
+import com.raul.henares.gestor_incidencias.Dtos.ModificarUsuarioDto;
+import com.raul.henares.gestor_incidencias.Dtos.UsuarioDto;
 import com.raul.henares.gestor_incidencias.Entidades.*;
 import com.raul.henares.gestor_incidencias.Repositorios.IncidenciaRepository;
 import com.raul.henares.gestor_incidencias.Repositorios.UsuarioRepository;
@@ -119,5 +122,38 @@ public class IncidenciaService {
             incidenciaDtos.add(dto);
         }
         return incidenciaDtos;
+    }
+
+    public List<IncidenciaDto> getPorEstado(Estado estado){
+        List<Incidencia> incidencias = this.incidenciaRepository.findByEstado(estado);
+        List<IncidenciaDto> dtos = new ArrayList<>();
+
+        for (Incidencia inc : incidencias){
+            IncidenciaDto dto = getIncidenciaDto(inc);
+            dtos.add(dto);
+        }
+        return dtos;
+    }
+
+    public Incidencia modificarIncidencia(ModificarIncidenciaDto dto){
+        Incidencia incidencia = this.incidenciaRepository.getReferenceById(dto.getId());
+        
+        if (dto.getCambio().equalsIgnoreCase("titulo")){
+            incidencia.setTitulo((String) dto.getValor());
+        } else if (dto.getCambio().equalsIgnoreCase("descripcion")){
+            incidencia.setDescripcion((String) dto.getValor());
+        } else if (dto.getCambio().equalsIgnoreCase("estado")) {
+            incidencia.setEstado((Estado) dto.getValor());
+        } else if (dto.getCambio().equalsIgnoreCase("prioridad")) {
+            incidencia.setPrioridad((Prioridad) dto.getValor());
+        } else if (dto.getCambio().equalsIgnoreCase("fechaCreacion")) {
+            incidencia.setFechaCreacion((LocalDateTime) dto.getValor());
+        } else if (dto.getCambio().equalsIgnoreCase("cliente")) {
+            incidencia.setCliente((Usuario) dto.getValor());
+        } else if (dto.getCambio().equalsIgnoreCase("tecnico")) {
+            incidencia.setTecnico((Usuario) dto.getValor());
+        }
+
+        return this.incidenciaRepository.save(incidencia);
     }
 }

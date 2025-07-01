@@ -1,6 +1,7 @@
 package com.raul.henares.gestor_incidencias.Controladores;
 
 import com.raul.henares.gestor_incidencias.Dtos.IncidenciaDto;
+import com.raul.henares.gestor_incidencias.Dtos.ModificarIncidenciaDto;
 import com.raul.henares.gestor_incidencias.Entidades.Estado;
 import com.raul.henares.gestor_incidencias.Entidades.Incidencia;
 import com.raul.henares.gestor_incidencias.Servicios.IncidenciaService;
@@ -8,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/incidence")
@@ -42,10 +45,12 @@ public class IncidenciaController {
     }
 
     @PostMapping("/addIncidence")
-    public ResponseEntity<String> crearIncidencia(@RequestBody IncidenciaDto dto){
+    public ResponseEntity<Map<String,String>> crearIncidencia(@RequestBody IncidenciaDto dto){
         try {
              this.incidenciaService.crear(dto);
-             return ResponseEntity.ok("Incidencia Creada");
+             Map<String ,String> resp = new HashMap<>();
+             resp.put("respuesta","Incidencia creada correctamente");
+             return ResponseEntity.ok(resp);
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
@@ -94,5 +99,27 @@ public class IncidenciaController {
             return ResponseEntity.badRequest().build();
         }
 
+    }
+
+    @GetMapping("/findByEstado/{estado}")
+    public ResponseEntity<List<IncidenciaDto>> getPorEstado(@PathVariable("estado")Estado estado){
+        try {
+            List<IncidenciaDto> respuesta = this.incidenciaService.getPorEstado(estado);
+            return ResponseEntity.ok(respuesta);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @PutMapping("/modifyIncidence")
+    public ResponseEntity<Map<String,String>> modificarIncidencia(@RequestBody ModificarIncidenciaDto dto){
+        try {
+            this.incidenciaService.modificarIncidencia(dto);
+            HashMap<String,String> respuesta = new HashMap<>();
+            respuesta.put("respuesta","incidencia modificada correctamente");
+            return ResponseEntity.ok(respuesta);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 }

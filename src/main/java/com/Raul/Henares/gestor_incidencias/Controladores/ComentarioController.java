@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/comments")
@@ -29,10 +31,12 @@ public class ComentarioController {
     }
 
     @PostMapping("/addComment")
-    public ResponseEntity<String> crearComentario(@RequestBody ComentarioDto comentario){
+    public ResponseEntity<Map<String,String>> crearComentario(@RequestBody ComentarioDto comentario){
         try {
             this.comentarioService.crear(comentario);
-            return ResponseEntity.ok("comentario creado");
+            Map<String ,String> resp = new HashMap<>();
+            resp.put("respuesta","Comentario creado");
+            return ResponseEntity.ok(resp);
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }

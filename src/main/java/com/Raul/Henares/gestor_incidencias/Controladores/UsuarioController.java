@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/user")
@@ -42,10 +44,12 @@ public class UsuarioController {
     }
 
     @PostMapping("/addUser")
-    public ResponseEntity<String> crearUsuario(@RequestBody UsuarioDto usuario){
+    public ResponseEntity<Map<String,String>> crearUsuario(@RequestBody UsuarioDto usuario){//arreglarlos crear con un map
         try {
             this.usuarioService.crear(usuario);
-            return ResponseEntity.ok("usuario creado");
+            Map<String ,String> resp = new HashMap<>();
+            resp.put("respuesta","usuario Creado");
+            return ResponseEntity.ok(resp);
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
@@ -77,6 +81,18 @@ public class UsuarioController {
     public ResponseEntity<List<UsuarioDto>> buscarPorRol(@PathVariable("rol")Rol rol){
         try {
             List<UsuarioDto> respuesta = this.usuarioService.buscarPorRol(rol);
+            return ResponseEntity.ok(respuesta);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @PutMapping("/modifyUser")
+    public ResponseEntity<Map<String,String>> modificarUsuario(@RequestBody ModificarUsuarioDto dto){
+        try {
+            this.usuarioService.modificarUsuario(dto);
+            HashMap<String,String> respuesta = new HashMap<>();
+            respuesta.put("respuesta","usuario cambiado correctamente");
             return ResponseEntity.ok(respuesta);
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
