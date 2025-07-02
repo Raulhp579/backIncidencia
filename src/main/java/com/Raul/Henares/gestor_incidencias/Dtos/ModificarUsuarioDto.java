@@ -4,8 +4,8 @@ import com.raul.henares.gestor_incidencias.Entidades.Rol;
 import lombok.Data;
 
 @Data
-public class  ModificarUsuarioDto<T>  {
+public class  ModificarUsuarioDto  {
     private Long idUsuario;
     private String cambio;
-    private T valor;
+    private String valor;
 }

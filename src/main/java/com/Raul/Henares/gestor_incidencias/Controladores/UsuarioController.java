@@ -44,7 +44,7 @@ public class UsuarioController {
     }
 
     @PostMapping("/addUser")
-    public ResponseEntity<Map<String,String>> crearUsuario(@RequestBody UsuarioDto usuario){//arreglarlos crear con un map
+    public ResponseEntity<Map<String,String>> crearUsuario(@RequestBody UsuarioDto usuario){
         try {
             this.usuarioService.crear(usuario);
             Map<String ,String> resp = new HashMap<>();
@@ -56,15 +56,6 @@ public class UsuarioController {
 
     }
 
-    @PutMapping("/updateUser") //cambiar en el front
-    public ResponseEntity<String> actualizarUsuario(@RequestBody ModificarUsuarioDto dto){
-        try {
-            this.usuarioService.modificarUsuario(dto);
-            return ResponseEntity.ok("usuario modificado");
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
-    }
 
     @GetMapping("/getByName/{nombre}")
     public ResponseEntity<UsuarioDto> buscarPorNombre(@PathVariable("nombre") String nombre){
@@ -88,14 +79,16 @@ public class UsuarioController {
     }
 
     @PutMapping("/modifyUser")
-    public ResponseEntity<Map<String,String>> modificarUsuario(@RequestBody ModificarUsuarioDto dto){
+    public ResponseEntity<Map<String, String>> modificarUsuario(@RequestBody ModificarUsuarioDto dto) {
         try {
-            this.usuarioService.modificarUsuario(dto);
-            HashMap<String,String> respuesta = new HashMap<>();
-            respuesta.put("respuesta","usuario cambiado correctamente");
+            usuarioService.modificarUsuario(dto);
+            Map<String, String> respuesta = new HashMap<>();
+            respuesta.put("respuesta", "usuario cambiado correctamente");
             return ResponseEntity.ok(respuesta);
         } catch (Exception e) {
+            e.printStackTrace(); //
             return ResponseEntity.badRequest().build();
         }
     }
+
 }

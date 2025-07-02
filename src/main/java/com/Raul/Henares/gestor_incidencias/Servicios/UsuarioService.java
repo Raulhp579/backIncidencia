@@ -50,21 +50,27 @@ public class UsuarioService {
         return this.usuarioRepository.save(usuario);
     }
 
-    public Usuario modificarUsuario(ModificarUsuarioDto dto){
-        Usuario usuario = this.usuarioRepository.getReferenceById(dto.getIdUsuario());
+    public Usuario modificarUsuario(ModificarUsuarioDto dto) {
+        Usuario usuario = usuarioRepository.getReferenceById(dto.getIdUsuario());
 
-        if (dto.getCambio().equalsIgnoreCase("nombre")){
-            usuario.setNombre((String) dto.getValor());
-        } else if (dto.getCambio().equalsIgnoreCase("email")) {
-            usuario.setEmail((String) dto.getValor());
-        } else if (dto.getCambio().equalsIgnoreCase("contraseña")) {
-            usuario.setContrasenya((String) dto.getValor());
-        } else if (dto.getCambio().equalsIgnoreCase("rol")) {
-            usuario.setRol((Rol) dto.getValor());
+        switch (dto.getCambio().toLowerCase()) {
+            case "nombre":
+                usuario.setNombre(dto.getValor());
+                break;
+            case "email":
+                usuario.setEmail(dto.getValor());
+                break;
+            case "contraseña":
+                usuario.setContrasenya(dto.getValor());
+                break;
+            case "rol":
+                usuario.setRol(Rol.valueOf(dto.getValor().toUpperCase()));
+                break;
         }
 
-        return this.usuarioRepository.save(usuario);
+        return usuarioRepository.save(usuario);
     }
+
 
     public UsuarioDto getPorNombre(String nombre){
         Usuario usuario = this.usuarioRepository.findByNombre(nombre);
